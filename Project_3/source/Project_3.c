@@ -2,8 +2,7 @@
  * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary fosuoitions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -33,13 +32,16 @@
  * @brief   Application entry point.
  */
 #include <stdio.h>
+#ifdef FREEDOM
 #include "board.h"
 #include "peripherals.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
-#include "Tests/tests.h"
+#endif
+#include "Pattern/patternGenerator.h"
+
 
 /* TODO: insert other include files here. */
 
@@ -48,16 +50,49 @@
 /*
  * @brief   Application entry point.
  */
-int main(void) {
 
+#ifdef FREEDOM
+void initFreedom()
+{
   	/* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
+}
+#endif
+void printArray(uint8_t* array, size_t length)
+{
+	for(int i = 0; i < length; i++)
+	{
+		#ifdef FREEDOM
+		PRINTF("%X",array[i]);
+		#else
+		printf("%X",array[i]);
+		#endif
+	}
+	#ifdef FREEDOM
+		printf("\n\r");
+	#else
+		printf("\n\r");
+	#endif
 
-    PRINTF("Running Unit Tests\n\r");
-    runTests();
+}
+int main(void) {
+
+#ifdef FREEDOM
+	initFreedom();
+#endif
+
+	uint8_t pattern[16] = {0};
+	for(int i = 0; i < 10; i++)
+	{
+		gen_pattern(pattern, 16, i);
+		printArray(pattern, 16);
+	}
+
+
+
 
 }

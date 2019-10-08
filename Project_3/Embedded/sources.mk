@@ -19,6 +19,7 @@ CMSIS_driver \
 Tests \
 board \
 drivers \
+source/LED \
 source/Pattern \
 source \
 startup \

@@ -18,42 +18,34 @@
  */
 #include "patternGenerator.h"
 
-uint8_t* gen_pattern(uint8_t* buffer,size_t length, uint8_t seed)
+void gen_pattern(uint8_t* pattern,size_t length, uint8_t seed)
 {
 
 	for(int i = 0; i < length; i++)
 	{
-		pattern[i] = LinearFeedbackShiftRegister(seed + i);
+		pattern[i] = LinearFeedbackShiftRegister(seed) + LinearFeedbackShiftRegister(i);
 	}
 
-	PRINTF("0x");
-	for(int i = 0; i < length; i++)
-	{
-		PRINTF("%X",pattern[i]);
-	}
-	PRINTF("\n\r");
-
-	return pattern;
 }
 
-uint8_t LinearFeedbackShiftRegister(uint8_t seed)
+uint8_t LinearFeedbackShiftRegister(uint16_t seed)
 {
 	//https://en.wikipedia.org/wiki/Linear-feedback_shift_register
-	uint8_t start_state = seed;  /* Any nonzero start state will work. */
-	uint8_t lfsr = start_state;
+	uint16_t start_state = seed;  /* Any nonzero start state will work. */
+	uint16_t lfsr = start_state;
 
 	for(int i = 0; i < 8; i++)
 	{
-		uint8_t lsb = lfsr  & 1; //get the least significant bit
+		uint16_t lsb = lfsr  & 1; //get the least significant bit
 		lfsr >>= 1; // shift
 		if(lsb)
 		{
-			lfsr ^= 0xB4;
+			lfsr ^= 0xB400u;
 		}
 	}
 
 	//PRINTF("0x%X\n\r",lfsr);
-	return lfsr;
+	return (uint8_t)lfsr;
 
 
 }

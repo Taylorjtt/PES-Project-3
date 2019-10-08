@@ -17,17 +17,34 @@
  *
  */
 #include "tests.h"
+#include <stdio.h>
+#include "board.h"
+#include "peripherals.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "MKL25Z4.h"
+#include "fsl_debug_console.h"
 #include "../source/Pattern/patternGenerator.h"
 
 void runTests(void)
 {
+  	/* Init board hardware. */
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    BOARD_InitBootPeripherals();
+  	/* Init FSL debug console. */
+    BOARD_InitDebugConsole();
 	UCUNIT_Init(); /* initialize framework */
 	UCUNIT_TestcaseBegin("Pattern Generator Test");
 	for(uint8_t i = 0; i < 0xFF; i++)
 	{
+		//test that LFSR values are the same for a same seed
 		UCUNIT_CheckIsEqual(LinearFeedbackShiftRegister(i),LinearFeedbackShiftRegister(i));
 	}
 	UCUNIT_TestcaseEnd();
-	gen_pattern(8, 15);
+}
 
+int main()
+{
+	runTests();
 }

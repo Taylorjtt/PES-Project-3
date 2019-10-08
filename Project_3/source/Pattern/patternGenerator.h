@@ -18,6 +18,9 @@
  */
 #include <stdint.h>
 #include <stdlib.h>
+#ifdef FREEDOM
 #include "fsl_debug_console.h"
-uint8_t* gen_pattern(size_t length, uint8_t seed);
-uint8_t LinearFeedbackShiftRegister(uint8_t seed);
+#endif
+
+void gen_pattern(uint8_t* pattern,size_t length, uint8_t seed);
+uint8_t LinearFeedbackShiftRegister(uint16_t seed);
