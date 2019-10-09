@@ -22,5 +22,24 @@
 #include "fsl_debug_console.h"
 #endif
 
+/**
+* @brief Function to generate arbitrary length pseudo random
+* byte pattern
+*
+*
+* @param pattern	byte pattern buffer
+* @param length 	length of the pattern
+* @param seed		16 bit seed value
+* @return void
+*/
 void gen_pattern(uint8_t* pattern,size_t length, uint8_t seed);
+
+
+/**
+* @brief Implementation of a Linear Feedback Shift Register
+*
+*
+* @param seed		16 bit seed value
+* @return void
+*/
 uint8_t LinearFeedbackShiftRegister(uint16_t seed);

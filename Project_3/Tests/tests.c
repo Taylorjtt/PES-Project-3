@@ -25,16 +25,9 @@
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
 #include "../source/Pattern/patternGenerator.h"
-
-void runTests(void)
+#include "../source/MemoryTest/MemoryTest.h"
+void testPatternGenerator()
 {
-  	/* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitBootPeripherals();
-  	/* Init FSL debug console. */
-    BOARD_InitDebugConsole();
-	UCUNIT_Init(); /* initialize framework */
 	UCUNIT_TestcaseBegin("Pattern Generator Test");
 	for(uint8_t i = 0; i < 0xFF; i++)
 	{
@@ -43,8 +36,55 @@ void runTests(void)
 	}
 	UCUNIT_TestcaseEnd();
 }
+void testMemoryFunctions()
+{
+	UCUNIT_TestcaseBegin("Memory Allocation Test");
+	uint32_t * chonk = allocate_words(5);
+	UCUNIT_CheckIsNotNull(chonk);
+	UCUNIT_CheckIs32Bit(*chonk);
+	free_words(chonk);
+	chonk = allocate_words(200000);
+	UCUNIT_CheckIsNull(chonk);
+	free_words(chonk);
+
+	chonk = allocate_words(16);
+
+	for(int i = 0; i < 16; i++)
+	{
+		write_memory(chonk, i);
+	}
+
+	uint8_t* chonkCopy = display_memory(chonk, 16);
+
+	for(int i = 0; i < 16; i++)
+	{
+		PRINTF("Index: %X  inArray: %\n\r",i,chonkCopy[i]);
+		UCUNIT_CheckIsEqual(i,chonkCopy[i]);
+	}
+
+	UCUNIT_TestcaseEnd();
+}
+void runTests(void)
+{
+
+
+	testPatternGenerator();
+	testMemoryFunctions();
+}
+void init()
+{
+  	/* Init board hardware. */
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    BOARD_InitBootPeripherals();
+  	/* Init FSL debug console. */
+    BOARD_InitDebugConsole();
+	UCUNIT_Init(); /* initialize framework */
+}
 
 int main()
 {
+	init();
 	runTests();
+	return 0;
 }

@@ -10,6 +10,7 @@ C_SRCS = \
 ../source/LED/*.c \
 ../source/*.c \
 ../source/Pattern/*.c \
+../source/MemoryTest/*.c \
 ../uCUnit/*.c \
 ../Tests/*.c \
 
@@ -55,6 +56,7 @@ UT_OBJS += \
 ./CMSIS/system_MKL25Z4.o \
 ./startup/startup_mkl25z4.o \
 ./utilities/fsl_debug_console.o \
+./source/MemoryTest/MemoryTest.o \
 ./source/mtb.o \
 ./source/LED/RGB.o \
 ./source/semihost_hardfault.o \
@@ -71,6 +73,7 @@ C_DEPS += \
 ./source/*.d \
 ./source/LED/*.d \
 ./source/Pattern/*.d \
+./source/MemoryTest/*.d \
 ./uCUnit/*.d \
 ./Tests/*.d \
 
