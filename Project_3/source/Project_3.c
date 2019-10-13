@@ -45,6 +45,7 @@ void initFreedom()
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
+
 }
 #endif
 void printArray(uint8_t* array, size_t length)

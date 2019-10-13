@@ -46,28 +46,79 @@ void testMemoryFunctions()
 	chonk = allocate_words(200000);
 	UCUNIT_CheckIsNull(chonk);
 	free_words(chonk);
+	UCUNIT_TestcaseEnd();
 
+	UCUNIT_TestcaseBegin("Write Memory Test");
 	chonk = allocate_words(16);
-
-	for(int i = 0; i < 16; i++)
+	for(uint8_t i = 0; i < 16; i++)
 	{
-		write_memory(chonk, i);
+		write_memory(get_address(chonk, i), i);
 	}
+	for(uint8_t i = 0; i < 16; i++)
+	{
+		uint8_t val = *((uint8_t *)chonk + i);
+		PRINTF("Index: %X  inArray: %X\n\r",i,val);
+		UCUNIT_CheckIsEqual(i,val);
+	}
+	UCUNIT_TestcaseEnd();
 
+	UCUNIT_TestcaseBegin("Display Memory Test");
 	uint8_t* chonkCopy = display_memory(chonk, 16);
 
+	for(uint8_t i = 0; i < 16; i++)
+	{
+		uint8_t val = *(chonkCopy + i);
+		PRINTF("Index: %X  inArray: %X\n\r",i,val);
+		UCUNIT_CheckIsEqual(i,val);
+	}
+	UCUNIT_TestcaseEnd();
+
+	UCUNIT_TestcaseBegin("Invert Block Test");
+	invert_block(chonk, 16);
+	for(uint8_t i = 0; i < 16; i++)
+	{
+		uint8_t val = *((uint8_t *)chonk + i);
+		PRINTF("Index: %X  inArray: %X\n\r",i ^ 0xFF,val);
+		UCUNIT_CheckIsEqual(i ^ 0xFF,val);
+	}
+	UCUNIT_TestcaseEnd();
+
+	UCUNIT_TestcaseBegin("Write Pattern Test");
+	write_pattern(chonk, 16, 0xA);
+	gen_pattern(chonkCopy, 16, 0xA);
+	for(uint8_t i = 0; i < 16; i++)
+	{
+		uint8_t valueOne = *((uint8_t *)chonk + i);
+		uint8_t valueTwo = *(chonkCopy + i);
+		PRINTF("Index: %X  inArray: %X\n\r",valueOne,valueTwo);
+		UCUNIT_CheckIsEqual(valueTwo,valueOne);
+	}
+	UCUNIT_TestcaseEnd();
+	UCUNIT_TestcaseBegin("Verify Pattern Test");
+	uint32_t* errors = verify_pattern(chonk, 16, 0xA);
 	for(int i = 0; i < 16; i++)
 	{
-		PRINTF("Index: %X  inArray: %\n\r",i,chonkCopy[i]);
-		UCUNIT_CheckIsEqual(i,chonkCopy[i]);
+
+		UCUNIT_CheckIsEqual(0,errors[i]);
 	}
 
+	//specifically change all of the values in the chonk array and make sure that
+	//the returned array is an array of all of the addresses represented by chonk
+
+	invert_block(chonk, 16);
+	errors = verify_pattern(chonk, 16, 0xA);
+	for(int i = 0; i < 16; i++)
+	{
+		UCUNIT_CheckIsEqual((uint32_t)chonk,errors[i]);
+	}
 	UCUNIT_TestcaseEnd();
+
+	free_words(chonk);
+	free_words((uint32_t*)chonkCopy);
+
 }
 void runTests(void)
 {
-
-
 	testPatternGenerator();
 	testMemoryFunctions();
 }

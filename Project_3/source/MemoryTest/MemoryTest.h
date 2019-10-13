@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../Pattern/patternGenerator.h"
+
 typedef enum mem_status
 {
 	SUCCESS = 0, // no error
@@ -35,7 +37,7 @@ mem_status write_memory(uint32_t * loc, uint8_t value);
 mem_status invert_block(uint32_t * loc, size_t length);
 mem_status write_pattern(uint32_t * loc, size_t length, int8_t seed);
 uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed);
-uint32_t * get_address(uint32_t * offset);
+uint32_t * get_address(uint32_t * loc, int8_t offset);
 
 
 #endif /* MEMORYTEST_MEMORYTEST_H_ */
