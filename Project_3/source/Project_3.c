@@ -25,7 +25,10 @@
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
 #endif
+#define SEED 0xA
+#define LENGTH 16
 #include "Pattern/patternGenerator.h"
+#include "MemoryTest/MemoryTest.h"
 
 
 /* TODO: insert other include files here. */
@@ -71,14 +74,26 @@ int main(void) {
 	initFreedom();
 #endif
 
-	uint8_t pattern[16] = {0};
-	for(int i = 0; i < 10; i++)
-	{
-		gen_pattern(pattern, 16, i);
-		printArray(pattern, 16);
-	}
-
-
-
+	uint32_t* memoryLocation = allocate_words(LENGTH);
+	write_pattern(memoryLocation , LENGTH, SEED);
+	uint8_t* display = display_memory(memoryLocation, LENGTH);
+	printArray(display, LENGTH);
+	verify_pattern(memoryLocation, LENGTH, SEED);
+	write_memory(memoryLocation, 0xFE);
+	write_memory(get_address(memoryLocation, 1), 0xEE);
+	display = display_memory(memoryLocation, LENGTH);
+	printArray(display, LENGTH);
+	verify_pattern(memoryLocation, LENGTH, SEED);
+	write_pattern(memoryLocation , LENGTH, SEED);
+	verify_pattern(memoryLocation, LENGTH, SEED);
+	invert_block(memoryLocation, 4);
+	display = display_memory(memoryLocation, LENGTH);
+	printArray(display, LENGTH);
+	verify_pattern(memoryLocation, LENGTH, SEED);
+	invert_block(memoryLocation, 4);
+	display = display_memory(memoryLocation, LENGTH);
+	printArray(display, LENGTH);
+	verify_pattern(memoryLocation, LENGTH, SEED);
+	free_words(memoryLocation);
 
 }

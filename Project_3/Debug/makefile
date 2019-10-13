@@ -36,6 +36,7 @@ OBJS += \
 ./source/mtb.o \
 ./source/LED/RGB.o \
 ./source/semihost_hardfault.o \
+./source/MemoryTest/MemoryTest.o \
 ./source/Pattern/patternGenerator.o \
 ./uCUnit/System.o \
 

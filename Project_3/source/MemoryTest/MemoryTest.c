@@ -36,11 +36,11 @@ void free_words(uint32_t * src)
 {
 	if(src == NULL)
 	{
-		#ifdef FREEDOM
+#ifdef FREEDOM
 		PRINTF("Warning: Source is NULL\n\r");
-		#else
+#else
 		printf("Warning: Source is NULL\n\r");
-		#endif
+#endif
 	}
 	free(src);
 
@@ -128,6 +128,11 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 		uint8_t valueTwo = *((uint8_t *)pattern + i);
 		if(valueOne != valueTwo)
 		{
+			#ifdef FREEDOM
+			PRINTF("Pattern Verification Error\n\r");
+			#else
+			printf("Pattern Verification Error\n\r");
+			#endif
 			errors[i] = (uint32_t)loc;
 		}
 		else
