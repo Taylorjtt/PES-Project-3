@@ -85,6 +85,8 @@ int main(void) {
 	printArray(display, LENGTH);
 	verify_pattern(memoryLocation, LENGTH, SEED);
 	write_pattern(memoryLocation , LENGTH, SEED);
+	display = display_memory(memoryLocation, LENGTH);
+	printArray(display, LENGTH);
 	verify_pattern(memoryLocation, LENGTH, SEED);
 	invert_block(memoryLocation, 4);
 	display = display_memory(memoryLocation, LENGTH);

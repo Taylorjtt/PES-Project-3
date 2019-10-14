@@ -95,18 +95,18 @@ fb: CC += -DFREEDOM
 unit_test: unit_test.axf
 
 pc: PRE =
-pc: CFLG = -O0 -fno-common -g3 -Wall -Werror -c -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)"
+pc: CFLG = -O0 -fno-common -g3 -Wall -c -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)"
 pc: LFLG =
 pc: INC = -I../source  
-pc: C_SRCS =../source/Project_3.c ./source/Pattern/patternGenerator.c  
-pc: OBJS = ./source/Project_3.o ./source/Pattern/patternGenerator.o 
-pc: C_DEPS =./source/Project_3.d ./source/Pattern/patternGenerator.d 
+pc: C_SRCS =../source/Project_3.c ./source/Pattern/patternGenerator.c ./source/MemoryTest/MemoryTest.c
+pc: OBJS = ./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/MemoryTest/MemoryTest.o
+pc: C_DEPS =./source/Project_3.d ./source/Pattern/patternGenerator.d ./source/MemoryTest/MemoryTest.d
 pc: CC =gcc
 pc: LL =gcc
 pc: Project_3.o
 
 # Tool invocations
-Project_3.o:./source/Project_3.o ./source/Pattern/patternGenerator.o 
+Project_3.o:./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/MemoryTest/MemoryTest.o
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
 	$(LL) $(LFLG) -o "P3.o" $(OBJS) $(USER_OBJS) $(LIBS)

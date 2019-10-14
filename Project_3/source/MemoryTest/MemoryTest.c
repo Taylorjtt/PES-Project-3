@@ -53,7 +53,7 @@ uint8_t * display_memory(uint32_t * loc, size_t length)
 }
 mem_status write_memory(uint32_t * loc, uint8_t value)
 {
-	uint32_t pointerAsInt = (uint32_t)loc;
+	uintptr_t pointerAsInt = (uintptr_t)loc;
 	if(loc == NULL)
 	{
 		return FAILED;
@@ -88,6 +88,10 @@ mem_status write_memory(uint32_t * loc, uint8_t value)
 			*loc &= 0x00FFFFFF;
 			*loc = *loc | value << 24;
 			return SUCCESS;
+		}
+		else
+		{
+			return FAILED;
 		}
 
 	}
@@ -133,7 +137,7 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 			#else
 			printf("Pattern Verification Error\n\r");
 			#endif
-			errors[i] = (uint32_t)loc;
+			errors[i] = (uintptr_t)loc;
 		}
 		else
 		{
