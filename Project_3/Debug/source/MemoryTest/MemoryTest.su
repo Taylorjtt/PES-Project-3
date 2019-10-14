@@ -1,0 +1,8 @@
+MemoryTest.c:21:12:allocate_words	24	static
+MemoryTest.c:35:6:free_words	16	static
+MemoryTest.c:48:11:display_memory	24	static
+MemoryTest.c:54:12:write_memory	24	static
+MemoryTest.c:95:12:invert_block	24	static
+MemoryTest.c:111:12:write_pattern	24	static
+MemoryTest.c:120:12:verify_pattern	48	static
+MemoryTest.c:147:12:get_address	24	static
