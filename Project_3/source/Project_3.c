@@ -29,6 +29,8 @@
 #define LENGTH 16
 #include "Pattern/patternGenerator.h"
 #include "MemoryTest/MemoryTest.h"
+#include "Logger/logger.h"
+
 
 
 /* TODO: insert other include files here. */
@@ -68,14 +70,22 @@ void printArray(uint8_t* array, size_t length)
 	#endif
 
 }
-int main(void) {
 
+LoggerHandle logger;
+int main(void)
+{
 #ifdef FREEDOM
 	initFreedom();
 #endif
 
+	logger = malloc(sizeof(LOGGERObject));
+	logger = Logger_Constructor((void*)logger, sizeof(LOGGERObject));
+	Logger_enable(logger);
+
 	uint32_t* memoryLocation = allocate_words(LENGTH);
 	write_pattern(memoryLocation , LENGTH, SEED);
+	//Logger_logData(logger,memoryLocation, LENGTH);
+
 	uint8_t* display = display_memory(memoryLocation, LENGTH);
 	printArray(display, LENGTH);
 	verify_pattern(memoryLocation, LENGTH, SEED);

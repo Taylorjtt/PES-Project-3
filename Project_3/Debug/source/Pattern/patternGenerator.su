@@ -1,0 +1,2 @@
+patternGenerator.c:21:6:gen_pattern	40	static
+patternGenerator.c:31:9:LinearFeedbackShiftRegister	40	static

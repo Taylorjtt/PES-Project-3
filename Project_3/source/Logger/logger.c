@@ -1,0 +1,87 @@
+/*****************************************************************************
+* Copyright (C) 2019 by John Taylor
+*
+* Redistribution, modification or use of this software in source or binary
+* forms is permitted as long as the files maintain this copyright. Users are
+* permitted to modify this and use it to learn about the field of embedded
+* software. John Taylor and the University of Colorado are not liable for
+* any misuse of this material.
+*
+*****************************************************************************/
+/*
+ * @file logger.c
+ * @brief Cross platform Logger
+ *
+ *  @author John Taylor
+ * 	@date Aug 11, 2019
+ *
+ */
+#include "logger.h"
+LoggerHandle Logger_Constructor(void *pmemory, const size_t numbytes)
+{
+	LoggerHandle handle;
+	LOGGERObject *obj;
+
+	if(numbytes < sizeof(LoggerHandle))
+	{
+		return ((LoggerHandle)NULL);
+
+	}
+
+	handle = (LoggerHandle)pmemory;
+	obj = (LOGGERObject *)handle;
+	obj->status = DISABLED;
+	return handle;
+}
+void Logger_enable(LoggerHandle handle)
+{
+	LOGGERObject *obj = (LOGGERObject *)handle;
+	obj->status = ENABLED;
+}
+void Logger_disable(LoggerHandle handle)
+{
+	LOGGERObject *obj = (LOGGERObject *)handle;
+	obj->status = DISABLED;
+}
+LOGGER_STATUS Logger_status(LoggerHandle handle)
+{
+	LOGGERObject *obj = (LOGGERObject *)handle;
+	return obj->status;
+}
+void Logger_logData(LoggerHandle handle, uint32_t* loc, size_t length)
+{
+	LOGGERObject *obj = (LOGGERObject *)handle;
+	if(obj->status == ENABLED)
+	{
+		for(int i = 0; i < length; i++)
+		{
+			uint32_t address = (uint32_t *)((uint8_t *)loc + i);
+			#ifdef FREEDOM
+			PRINTF("Address: %X\tData:%X\n\r",address,(uint8_t)loc[i]);
+			#else
+			printf("Address: %X\tData:%X\n\r",address,(uint8_t)loc[i]);
+			#endif
+		}
+		#ifdef FREEDOM
+			PRINTF("\n\r");
+		#else
+			printf("\n\r");
+		#endif
+	}
+}
+void Logger_logString(LoggerHandle handle, const char * string)
+{
+	LOGGERObject *obj = (LOGGERObject *)handle;
+	if(obj->status == ENABLED)
+	{
+
+	}
+}
+void Logger_logInt(LoggerHandle handle, uint8_t num)
+{
+	LOGGERObject *obj = (LOGGERObject *)handle;
+	if(obj->status == ENABLED)
+	{
+
+	}
+}

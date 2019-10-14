@@ -13,6 +13,7 @@ C_SRCS = \
 ../source/MemoryTest/*.c \
 ../uCUnit/*.c \
 ../Tests/*.c \
+../source/Logger/*.c \
 
 
 OBJS += \
@@ -35,6 +36,7 @@ OBJS += \
 ./source/Project_3.o \
 ./source/mtb.o \
 ./source/LED/RGB.o \
+./source/Logger/logger.o \
 ./source/semihost_hardfault.o \
 ./source/MemoryTest/MemoryTest.o \
 ./source/Pattern/patternGenerator.o \
@@ -62,6 +64,7 @@ UT_OBJS += \
 ./source/LED/RGB.o \
 ./source/semihost_hardfault.o \
 ./source/Pattern/patternGenerator.o \
+./source/Logger/logger.o \
 ./uCUnit/System.o \
 ./Tests/tests.o \
 
@@ -74,6 +77,7 @@ C_DEPS += \
 ./source/*.d \
 ./source/LED/*.d \
 ./source/Pattern/*.d \
+./source/Logger/*.d \
 ./source/MemoryTest/*.d \
 ./uCUnit/*.d \
 ./Tests/*.d \
@@ -98,15 +102,15 @@ pc: PRE =
 pc: CFLG = -O0 -fno-common -g3 -Wall -c -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)"
 pc: LFLG =
 pc: INC = -I../source  
-pc: C_SRCS =../source/Project_3.c ./source/Pattern/patternGenerator.c ./source/MemoryTest/MemoryTest.c
-pc: OBJS = ./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/MemoryTest/MemoryTest.o
-pc: C_DEPS =./source/Project_3.d ./source/Pattern/patternGenerator.d ./source/MemoryTest/MemoryTest.d
+pc: C_SRCS =../source/Project_3.c ./source/Pattern/patternGenerator.c ./source/MemoryTest/MemoryTest.c ./source/Logger/logger.c
+pc: OBJS = ./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/MemoryTest/MemoryTest.o ./source/Logger/logger.o
+pc: C_DEPS =./source/Project_3.d ./source/Pattern/patternGenerator.d ./source/MemoryTest/MemoryTest.d ./source/Logger/logger.d
 pc: CC =gcc
 pc: LL =gcc
 pc: Project_3.o
 
 # Tool invocations
-Project_3.o:./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/MemoryTest/MemoryTest.o
+Project_3.o:./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/MemoryTest/MemoryTest.o ./source/Logger/logger.o
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
 	$(LL) $(LFLG) -o "P3.o" $(OBJS) $(USER_OBJS) $(LIBS)
