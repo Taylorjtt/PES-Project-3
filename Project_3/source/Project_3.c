@@ -16,30 +16,7 @@
  * 	@date Oct 5, 2019
  *
  */
-#include <stdio.h>
-#ifdef FREEDOM
-#include "board.h"
-#include "peripherals.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "MKL25Z4.h"
-#include "fsl_debug_console.h"
-#endif
-#define SEED 0xA
-#define LENGTH 16
-#include "Pattern/patternGenerator.h"
-#include "MemoryTest/MemoryTest.h"
-#include "Logger/logger.h"
-
-
-
-/* TODO: insert other include files here. */
-
-/* TODO: insert other definitions and declarations here. */
-
-/*
- * @brief   Application entry point.
- */
+#include "Project_3.h"
 
 #ifdef FREEDOM
 void initFreedom()
@@ -50,28 +27,11 @@ void initFreedom()
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
-
 }
 #endif
-void printArray(uint8_t* array, size_t length)
-{
-	for(int i = 0; i < length; i++)
-	{
-		#ifdef FREEDOM
-		PRINTF("%X",array[i]);
-		#else
-		printf("%X",array[i]);
-		#endif
-	}
-	#ifdef FREEDOM
-		printf("\n\r");
-	#else
-		printf("\n\r");
-	#endif
-
-}
-
 LoggerHandle logger;
+
+
 int main(void)
 {
 #ifdef FREEDOM
@@ -79,33 +39,74 @@ int main(void)
 #endif
 
 	logger = malloc(sizeof(LOGGERObject));
-	logger = Logger_Constructor((void*)logger, sizeof(LOGGERObject));
+	logger = Logger_Constructor((void*)logger, sizeof(LoggerHandle));
 	Logger_enable(logger);
 
+	Logger_logString(logger, "Allocating 16 Bytes");
+	//Allocate 16 bytes
 	uint32_t* memoryLocation = allocate_words(LENGTH);
-	write_pattern(memoryLocation , LENGTH, SEED);
-	//Logger_logData(logger,memoryLocation, LENGTH);
 
-	uint8_t* display = display_memory(memoryLocation, LENGTH);
-	printArray(display, LENGTH);
+	Logger_logString(logger, "Writing a memory pattern with seed 0xA");
+	write_pattern(memoryLocation , LENGTH, SEED);
+
+	//Display that region’s memory pattern
+	display_memory(memoryLocation, LENGTH);
+
+
+	//Verify that region’s memory pattern (should pass)
+	Logger_logString(logger, "Verifying Pattern (Should Pass)");
 	verify_pattern(memoryLocation, LENGTH, SEED);
+
+	//Write 0xFFEE to a position within that region (location + some offset you select)
+	Logger_logString(logger, "Writing 0xFFEE to the beginning of the chunk");
 	write_memory(memoryLocation, 0xFE);
 	write_memory(get_address(memoryLocation, 1), 0xEE);
-	display = display_memory(memoryLocation, LENGTH);
-	printArray(display, LENGTH);
+
+	//Display that region’s memory pattern
+	display_memory(memoryLocation, LENGTH);
+
+	//Verify the memory pattern again (should error)
+	Logger_logString(logger, "Verifying Pattern (should fail)");
 	verify_pattern(memoryLocation, LENGTH, SEED);
+
+	//Write a memory pattern to the region using the same seed as before
+	Logger_logString(logger, "Writing a memory pattern with seed 0xA");
 	write_pattern(memoryLocation , LENGTH, SEED);
-	display = display_memory(memoryLocation, LENGTH);
-	printArray(display, LENGTH);
+
+	//Display that region’s memory pattern
+	display_memory(memoryLocation, LENGTH);
+
+
+	//Verify that memory pattern again (should pass)
+	Logger_logString(logger, "Verifying Pattern (Should Pass)");
 	verify_pattern(memoryLocation, LENGTH, SEED);
+
+	//Invert 4 bytes in the region (location + some offset)
+	Logger_logString(logger, "Inverting the first four bytes");
 	invert_block(memoryLocation, 4);
-	display = display_memory(memoryLocation, LENGTH);
-	printArray(display, LENGTH);
+
+	//Display that region’s memory pattern
+	display_memory(memoryLocation, LENGTH);
+
+
+	//Verify the memory pattern again (should error)
+	Logger_logString(logger, "Verifying Pattern (Should Fail)");
 	verify_pattern(memoryLocation, LENGTH, SEED);
+
+	//Invert those 4 bytes again in the LMA region (location + some offset)
+	Logger_logString(logger, "Inverting the bytes again");
 	invert_block(memoryLocation, 4);
-	display = display_memory(memoryLocation, LENGTH);
-	printArray(display, LENGTH);
+
+	//Display that region’s memory pattern
+	display_memory(memoryLocation, LENGTH);
+
+
+	//Verify that memory pattern again (should pass)
+	Logger_logString(logger, "Verifying Pattern (Should Pass)");
 	verify_pattern(memoryLocation, LENGTH, SEED);
+
+	//Free the 16 byte allocated region
+	Logger_logString(logger, "Freeing the memory");
 	free_words(memoryLocation);
 
 }

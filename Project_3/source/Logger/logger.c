@@ -22,7 +22,7 @@ LoggerHandle Logger_Constructor(void *pmemory, const size_t numbytes)
 	LoggerHandle handle;
 	LOGGERObject *obj;
 
-	if(numbytes < sizeof(LoggerHandle))
+	if(numbytes < sizeof(LOGGERObject))
 	{
 		return ((LoggerHandle)NULL);
 
@@ -48,18 +48,18 @@ LOGGER_STATUS Logger_status(LoggerHandle handle)
 	LOGGERObject *obj = (LOGGERObject *)handle;
 	return obj->status;
 }
-void Logger_logData(LoggerHandle handle, uint32_t* loc, size_t length)
+void Logger_logData(LoggerHandle handle, uint8_t* loc, size_t length)
 {
 	LOGGERObject *obj = (LOGGERObject *)handle;
 	if(obj->status == ENABLED)
 	{
 		for(int i = 0; i < length; i++)
 		{
-			uint32_t address = (uint32_t *)((uint8_t *)loc + i);
+			uint32_t address = (uint32_t)(loc + i);
 			#ifdef FREEDOM
-			PRINTF("Address: %X\tData:%X\n\r",address,(uint8_t)loc[i]);
+			PRINTF("LOGGER: Address: %02X\tData:%X\n\r",address,loc[i]);
 			#else
-			printf("Address: %X\tData:%X\n\r",address,(uint8_t)loc[i]);
+			printf("LOGGER: Address: %02X\tData:%X\n\r",address,loc[i]);
 			#endif
 		}
 		#ifdef FREEDOM
@@ -74,7 +74,7 @@ void Logger_logString(LoggerHandle handle, const char * string)
 	LOGGERObject *obj = (LOGGERObject *)handle;
 	if(obj->status == ENABLED)
 	{
-
+		printf("LOGGER: %s\n\r",string);
 	}
 }
 void Logger_logInt(LoggerHandle handle, uint8_t num)
@@ -82,6 +82,6 @@ void Logger_logInt(LoggerHandle handle, uint8_t num)
 	LOGGERObject *obj = (LOGGERObject *)handle;
 	if(obj->status == ENABLED)
 	{
-
+		printf("LOGGER: %d\n\r",num);
 	}
 }

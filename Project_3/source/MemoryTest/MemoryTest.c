@@ -20,15 +20,11 @@
 
 uint32_t * allocate_words(size_t length)
 {
-
 	uint32_t * words = (uint32_t*)malloc(length);
 	if(words == NULL)
 	{
-#ifdef FREEDOM
-		PRINTF("Warning: Allocation Error\n\r");
-#else
-		printf("Warning: Allocation Error\n\r");
-#endif
+		Logger_logString(logger, "Allocation Error");
+		return words;
 	}
 	return words;
 }
@@ -36,23 +32,22 @@ void free_words(uint32_t * src)
 {
 	if(src == NULL)
 	{
-#ifdef FREEDOM
-		PRINTF("Warning: Source is NULL\n\r");
-#else
-		printf("Warning: Source is NULL\n\r");
-#endif
+		Logger_logString(logger, "Source is NULL");
 	}
 	free(src);
 
 }
 uint8_t * display_memory(uint32_t * loc, size_t length)
 {
+	Logger_logString(logger, "Displaying Pattern");
 	uint8_t * mem = (uint8_t*)allocate_words(length);
 	memcpy(mem,loc,length);
+	Logger_logData(logger,(uint8_t*)loc, length);
 	return mem;
 }
 mem_status write_memory(uint32_t * loc, uint8_t value)
 {
+
 	uintptr_t pointerAsInt = (uintptr_t)loc;
 	if(loc == NULL)
 	{
@@ -102,7 +97,9 @@ mem_status invert_block(uint32_t * loc, size_t length)
 	{
 		return FAILED;
 	}
+	Logger_disable(logger);
 	uint8_t* vals = display_memory(loc, length);
+	Logger_enable(logger);
 	for(int i = 0; i < length; i++)
 	{
 		if(write_memory(get_address(loc, i), vals[i] ^ 0xFFFF) == FAILED)
@@ -123,6 +120,7 @@ mem_status write_pattern(uint32_t * loc, size_t length, int8_t seed)
 }
 uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 {
+	bool passed = true;
 	uint32_t* pattern = allocate_words(length);
 	gen_pattern((uint8_t*)pattern, length, seed);
 	uint32_t * errors = allocate_words(length*sizeof(uint32_t));
@@ -132,12 +130,8 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 		uint8_t valueTwo = *((uint8_t *)pattern + i);
 		if(valueOne != valueTwo)
 		{
-			#ifdef FREEDOM
-			PRINTF("Pattern Verification Error\n\r");
-			#else
-			printf("Pattern Verification Error\n\r");
-			#endif
-			errors[i] = (uintptr_t)loc;
+			passed = false;
+			errors[i] = (uintptr_t)((uint8_t*)loc + i);
 		}
 		else
 		{
@@ -145,6 +139,14 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 		}
 	}
 	free_words(pattern);
+	if(passed)
+	{
+		Logger_logString(logger, "Pattern Verification Passed");
+	}
+	else
+	{
+		Logger_logString(logger, "Pattern Verification Failed");
+	}
 	return errors;
 
 }

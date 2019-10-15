@@ -18,11 +18,14 @@
  */
 #ifndef MEMORYTEST_MEMORYTEST_H_
 #define MEMORYTEST_MEMORYTEST_H_
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../Pattern/patternGenerator.h"
+#include "../Logger/logger.h"
+#include "../Project_3.h"
 
 typedef enum mem_status
 {

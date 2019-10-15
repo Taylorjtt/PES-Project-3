@@ -1,37 +1,22 @@
 source/MemoryTest/MemoryTest.o source/MemoryTest/MemoryTest.d: \
  ../source/MemoryTest/MemoryTest.c ../source/MemoryTest/MemoryTest.h \
  ../source/MemoryTest/../Pattern/patternGenerator.h \
- ../utilities/fsl_debug_console.h ../drivers/fsl_common.h \
- ../CMSIS/fsl_device_registers.h ../CMSIS/MKL25Z4.h \
- ../CMSIS/core_cm0plus.h ../CMSIS/core_cmInstr.h ../CMSIS/cmsis_gcc.h \
- ../CMSIS/core_cmFunc.h ../CMSIS/system_MKL25Z4.h \
- ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
- ../drivers/fsl_common.h
+ ../source/MemoryTest/../Logger/logger.h \
+ ../source/MemoryTest/../Project_3.h \
+ ../source/MemoryTest/../Pattern/patternGenerator.h \
+ ../source/MemoryTest/../MemoryTest/MemoryTest.h \
+ ../source/MemoryTest/../Logger/logger.h
 
 ../source/MemoryTest/MemoryTest.h:
 
 ../source/MemoryTest/../Pattern/patternGenerator.h:
 
-../utilities/fsl_debug_console.h:
+../source/MemoryTest/../Logger/logger.h:
 
-../drivers/fsl_common.h:
+../source/MemoryTest/../Project_3.h:
 
-../CMSIS/fsl_device_registers.h:
+../source/MemoryTest/../Pattern/patternGenerator.h:
 
-../CMSIS/MKL25Z4.h:
+../source/MemoryTest/../MemoryTest/MemoryTest.h:
 
-../CMSIS/core_cm0plus.h:
-
-../CMSIS/core_cmInstr.h:
-
-../CMSIS/cmsis_gcc.h:
-
-../CMSIS/core_cmFunc.h:
-
-../CMSIS/system_MKL25Z4.h:
-
-../CMSIS/MKL25Z4_features.h:
-
-../drivers/fsl_clock.h:
-
-../drivers/fsl_common.h:
+../source/MemoryTest/../Logger/logger.h:

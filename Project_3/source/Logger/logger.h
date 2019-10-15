@@ -38,7 +38,7 @@ LoggerHandle Logger_Constructor(void *pmemory, const size_t numbytes);
 void Logger_enable(LoggerHandle handle);
 void Logger_disable(LoggerHandle handle);
 LOGGER_STATUS Logger_status(LoggerHandle handle);
-void Logger_logData(LoggerHandle handle, uint32_t* loc, size_t length);
+void Logger_logData(LoggerHandle handle, uint8_t* loc, size_t length);
 void Logger_logString(LoggerHandle handle, const char * string);
 void Logger_logInt(LoggerHandle handle, uint8_t num);
 

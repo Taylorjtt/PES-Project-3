@@ -25,7 +25,7 @@ RGBLEDHandle RGBLED_Constructor(void *pmemory, const size_t numbytes, GPIO_Type 
 	RGBLEDHandle handle;
 	RGBLEDObject *obj;
 
-	if(numbytes < sizeof(RGBLEDHandle))
+	if(numbytes < sizeof(RGBLEDObject))
 	{
 		return ((RGBLEDHandle)NULL);
 	}
