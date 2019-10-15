@@ -117,10 +117,10 @@ Project_3.o:./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/Me
 	@echo 'Finished building target: $@'
 	@echo ' '
 	
-unit_test.axf: $(UT_OBJS)
+unit_test.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	$(LL) $(LFLG) -o "unit_test.axf" $(UT_OBJS) $(USER_OBJS) $(LIBS)
+	$(LL) $(LFLG) -o "unit_test.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

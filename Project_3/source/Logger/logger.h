@@ -34,12 +34,57 @@ typedef struct LOGGER_OBJ
 
 typedef struct LOGGER_OBJ *LoggerHandle;
 
+/**
+* @brief Constructor for Logger object
+*
+* Given a chunk of memory, the size of an Logger object, initialize a logger
+*
+* @param pmemory	The pointer to the memory that this object will use
+* @param numbytes	The expected size of the object
+* @return LoggerHandle a pointer to an LoggerObject
+*/
 LoggerHandle Logger_Constructor(void *pmemory, const size_t numbytes);
+
+/**
+* @brief Function to enable the logger
+*
+* @param handle		logger object handle
+*/
 void Logger_enable(LoggerHandle handle);
+/**
+* @brief Function to disable the logger
+*
+* @param handle		logger object handle
+*/
 void Logger_disable(LoggerHandle handle);
+/**
+* @brief Function to get whether or not the logger is enabled
+*
+* @param handle		logger object handle
+* @return LOGGER_STATUS indicating whether or not the logger is enabled
+*/
 LOGGER_STATUS Logger_status(LoggerHandle handle);
+/**
+* @brief Log a chunk of memory
+*
+* @param handle		logger object handle
+* @param loc		memory location
+* @param length		length in bytes of memory chunk
+*/
 void Logger_logData(LoggerHandle handle, uint8_t* loc, size_t length);
+/**
+* @brief Log a string
+*
+* @param handle		logger object handle
+* @param string		string to log
+*/
 void Logger_logString(LoggerHandle handle, const char * string);
+/**
+* @brief Log an integer
+*
+* @param handle		logger object handle
+* @param string		int to log
+*/
 void Logger_logInt(LoggerHandle handle, uint8_t num);
 
 #endif /* LOGGER_LOGGER_H_ */
