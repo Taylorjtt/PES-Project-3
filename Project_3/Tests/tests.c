@@ -17,7 +17,7 @@
  *
  */
 #include "tests.h"
-
+LoggerHandle logger;
 void testPatternGenerator()
 {
 	UCUNIT_TestcaseBegin("Pattern Generator Test");
@@ -101,7 +101,7 @@ void testMemoryFunctions()
 	errors = verify_pattern(chonk, 16, 0xA);
 	for(int i = 0; i < 16; i++)
 	{
-		UCUNIT_CheckIsEqual((uint32_t)chonk,errors[i]);
+		UCUNIT_CheckIsEqual(((uintptr_t)(uint8_t*)chonk + i),errors[i]);
 	}
 	UCUNIT_TestcaseEnd();
 
@@ -116,6 +116,9 @@ void runTests(void)
 }
 void init()
 {
+	logger = malloc(sizeof(LOGGERObject));
+	logger = Logger_Constructor((void*)logger, sizeof(LoggerHandle));
+	Logger_disable(logger);
   	/* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();

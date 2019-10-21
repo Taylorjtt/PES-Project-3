@@ -59,14 +59,14 @@ UT_OBJS += \
 ./CMSIS/system_MKL25Z4.o \
 ./startup/startup_mkl25z4.o \
 ./utilities/fsl_debug_console.o \
-./source/MemoryTest/MemoryTest.o \
+./Tests/tests.o \
 ./source/mtb.o \
 ./source/LED/RGB.o \
-./source/semihost_hardfault.o \
-./source/Pattern/patternGenerator.o \
 ./source/Logger/logger.o \
+./source/semihost_hardfault.o \
+./source/MemoryTest/MemoryTest.o \
+./source/Pattern/patternGenerator.o \
 ./uCUnit/System.o \
-./Tests/tests.o \
 
 C_DEPS += \
 ./board/*.d \
@@ -86,7 +86,7 @@ CC = arm-none-eabi-gcc
 LL = arm-none-eabi-gcc
 
 PRE = -D__REDLIB__ -DCPU_MKL25Z128VLK4 -DCPU_MKL25Z128VLK4_cm0plus -DSDK_OS_BAREMETAL -DFSL_RTOS_BM -DSDK_DEBUGCONSOLE=0 -DPRINTF_FLOAT_ENABLE=1 -DSDK_DEBUGCONSOLE_UART -D__MCUXPRESSO -D__USE_CMSIS -DDEBUG
-INC = -I../board -I../source -I../ -I../drivers -I../CMSIS -I../utilities -I../startup -I../Pattern
+INC = -I../board -I../source -I../ -I../drivers -I../CMSIS -I../utilities -I../startup -I../Pattern 
 CFLG = -O0 -fno-common -g3 -Wall -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -mcpu=cortex-m0plus -mthumb -D__REDLIB__ -fstack-usage -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)"
 LFLG = -nostdlib -Xlinker -Map="Project_2.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m0plus -mthumb -T linkerfile.ld
 
@@ -117,10 +117,10 @@ Project_3.o:./source/Project_3.o ./source/Pattern/patternGenerator.o ./source/Me
 	@echo 'Finished building target: $@'
 	@echo ' '
 	
-unit_test.axf: $(OBJS) $(USER_OBJS)
+unit_test.axf: $(UT_OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	$(LL) $(LFLG) -o "unit_test.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	$(LL) $(LFLG) -o "unit_test.axf" $(UT_OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

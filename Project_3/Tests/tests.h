@@ -18,7 +18,6 @@
  */
 #include "../uCUnit/uCUnit.h"
 #include "fsl_debug_console.h"
-#include "source/Project_3.h"
 #include <stdio.h>
 #include "board.h"
 #include "peripherals.h"
@@ -28,7 +27,7 @@
 #include "fsl_debug_console.h"
 #include "../source/Pattern/patternGenerator.h"
 #include "../source/MemoryTest/MemoryTest.h"
-
+extern LoggerHandle logger;
 /**
 * @brief Main Tests for Project 3
 */

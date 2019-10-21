@@ -10,7 +10,12 @@ Tests/tests.o Tests/tests.d: ../Tests/tests.c ../Tests/tests.h \
  ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../Tests/../source/Pattern/patternGenerator.h \
  ../Tests/../source/MemoryTest/MemoryTest.h \
- ../Tests/../source/MemoryTest/../Pattern/patternGenerator.h
+ ../Tests/../source/MemoryTest/../Pattern/patternGenerator.h \
+ ../Tests/../source/MemoryTest/../Logger/logger.h \
+ ../Tests/../source/MemoryTest/../Project_3.h \
+ ../Tests/../source/MemoryTest/../Pattern/patternGenerator.h \
+ ../Tests/../source/MemoryTest/../MemoryTest/MemoryTest.h \
+ ../Tests/../source/MemoryTest/../Logger/logger.h
 
 ../Tests/tests.h:
 
@@ -61,3 +66,13 @@ Tests/tests.o Tests/tests.d: ../Tests/tests.c ../Tests/tests.h \
 ../Tests/../source/MemoryTest/MemoryTest.h:
 
 ../Tests/../source/MemoryTest/../Pattern/patternGenerator.h:
+
+../Tests/../source/MemoryTest/../Logger/logger.h:
+
+../Tests/../source/MemoryTest/../Project_3.h:
+
+../Tests/../source/MemoryTest/../Pattern/patternGenerator.h:
+
+../Tests/../source/MemoryTest/../MemoryTest/MemoryTest.h:
+
+../Tests/../source/MemoryTest/../Logger/logger.h:
