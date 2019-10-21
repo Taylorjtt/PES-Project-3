@@ -55,11 +55,11 @@ void Logger_logData(LoggerHandle handle, uint8_t* loc, size_t length)
 	{
 		for(int i = 0; i < length; i++)
 		{
-			uint32_t address = (uint32_t)(loc + i);
+			uintptr_t address = (uintptr_t)(loc + i);
 			#ifdef FREEDOM
 			PRINTF("LOGGER: Address: %02X\tData:%X\n\r",address,loc[i]);
 			#else
-			printf("LOGGER: Address: %02X\tData:%X\n\r",address,loc[i]);
+			printf("LOGGER: Address: %02X\tData:%X\n\r",(uint32_t)address,loc[i]);
 			#endif
 		}
 		#ifdef FREEDOM

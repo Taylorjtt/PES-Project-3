@@ -16,6 +16,7 @@
  * 	@date Oct 5, 2019
  *
  */
+#define FREEDOM
 #include "../uCUnit/uCUnit.h"
 #include "fsl_debug_console.h"
 #include <stdio.h>
@@ -27,7 +28,16 @@
 #include "fsl_debug_console.h"
 #include "../source/Pattern/patternGenerator.h"
 #include "../source/MemoryTest/MemoryTest.h"
+#define RED_BASE GPIOB
+#define RED_PIN 18U
+
+#define GREEN_BASE GPIOB
+#define GREEN_PIN 19U
+
+#define BLUE_BASE GPIOD
+#define BLUE_PIN 1U
 extern LoggerHandle logger;
+extern RGBLEDHandle led;
 /**
 * @brief Main Tests for Project 3
 */

@@ -17,6 +17,7 @@
  *
  */
 #include "tests.h"
+RGBLEDHandle led;
 LoggerHandle logger;
 void testPatternGenerator()
 {
@@ -131,6 +132,8 @@ void init()
 int main()
 {
 	init();
+	led = malloc(sizeof(RGBLEDObject));
+	led = RGBLED_Constructor((void*) led, sizeof(RGBLEDObject), RED_BASE, RED_PIN, GREEN_BASE, GREEN_PIN, BLUE_BASE, BLUE_PIN);
 	runTests();
 	return 0;
 }

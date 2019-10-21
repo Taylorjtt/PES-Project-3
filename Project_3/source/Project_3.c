@@ -19,6 +19,15 @@
 #include "Project_3.h"
 
 #ifdef FREEDOM
+#define RED_BASE GPIOB
+#define RED_PIN 18U
+
+#define GREEN_BASE GPIOB
+#define GREEN_PIN 19U
+
+#define BLUE_BASE GPIOD
+#define BLUE_PIN 1U
+
 void initFreedom()
 {
   	/* Init board hardware. */
@@ -27,8 +36,12 @@ void initFreedom()
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
+	//initialize the Freedom specific RGB LED object
+
+
 }
 #endif
+RGBLEDHandle led;
 LoggerHandle logger;
 
 
@@ -36,8 +49,17 @@ int main(void)
 {
 #ifdef FREEDOM
 	initFreedom();
+	led = malloc(sizeof(RGBLEDObject));
+	led = RGBLED_Constructor((void*) led, sizeof(RGBLEDObject), RED_BASE, RED_PIN, GREEN_BASE, GREEN_PIN, BLUE_BASE, BLUE_PIN);
+#else
+	led = malloc(sizeof(RGBLEDObject));
+	led = RGBLED_Constructor((void*) led, sizeof(RGBLEDObject));
 #endif
 
+
+
+
+	RGBLED_set(led, false, false, true);
 	logger = malloc(sizeof(LOGGERObject));
 	logger = Logger_Constructor((void*)logger, sizeof(LoggerHandle));
 	Logger_enable(logger);

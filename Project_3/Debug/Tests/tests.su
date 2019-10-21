@@ -1,5 +1,5 @@
-tests.c:21:6:testPatternGenerator	24	static
-tests.c:31:6:testMemoryFunctions	56	static
-tests.c:112:6:runTests	8	static
-tests.c:117:6:init	8	static
-tests.c:131:5:main	8	static
+tests.c:22:6:testPatternGenerator	24	static
+tests.c:32:6:testMemoryFunctions	56	static
+tests.c:113:6:runTests	8	static
+tests.c:118:6:init	8	static
+tests.c:132:5:main	24	static

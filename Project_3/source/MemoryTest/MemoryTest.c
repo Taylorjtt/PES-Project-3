@@ -24,6 +24,7 @@ uint32_t * allocate_words(size_t length)
 	if(words == NULL)
 	{
 		Logger_logString(logger, "Allocation Error");
+		RGBLED_set(led, true, false, false);
 		return words;
 	}
 	return words;
@@ -51,6 +52,7 @@ mem_status write_memory(uint32_t * loc, uint8_t value)
 	uintptr_t pointerAsInt = (uintptr_t)loc;
 	if(loc == NULL)
 	{
+		RGBLED_set(led, true, false, false);
 		return FAILED;
 	}
 	else
@@ -86,6 +88,7 @@ mem_status write_memory(uint32_t * loc, uint8_t value)
 		}
 		else
 		{
+			RGBLED_set(led, true, false, false);
 			return FAILED;
 		}
 
@@ -95,6 +98,7 @@ mem_status invert_block(uint32_t * loc, size_t length)
 {
 	if(loc == NULL)
 	{
+		RGBLED_set(led, true, false, false);
 		return FAILED;
 	}
 	Logger_disable(logger);
@@ -104,6 +108,7 @@ mem_status invert_block(uint32_t * loc, size_t length)
 	{
 		if(write_memory(get_address(loc, i), vals[i] ^ 0xFFFF) == FAILED)
 		{
+			RGBLED_set(led, true, false, false);
 			return FAILED;
 		}
 	}
@@ -113,6 +118,7 @@ mem_status write_pattern(uint32_t * loc, size_t length, int8_t seed)
 {
 	if(loc == NULL)
 	{
+		RGBLED_set(led, true, false, false);
 		return FAILED;
 	}
 	gen_pattern((uint8_t*)(loc), length, seed);
@@ -145,6 +151,7 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 	}
 	else
 	{
+		RGBLED_set(led, true, false, false);
 		Logger_logString(logger, "Pattern Verification Failed");
 	}
 	return errors;

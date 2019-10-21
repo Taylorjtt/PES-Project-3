@@ -15,6 +15,9 @@ Tests/tests.o Tests/tests.d: ../Tests/tests.c ../Tests/tests.h \
  ../Tests/../source/MemoryTest/../Project_3.h \
  ../Tests/../source/MemoryTest/../Pattern/patternGenerator.h \
  ../Tests/../source/MemoryTest/../MemoryTest/MemoryTest.h \
+ ../Tests/../source/MemoryTest/../LED/RGB.h \
+ ../Tests/../source/MemoryTest/../LED/../../CMSIS/MKL25Z4.h \
+ ../Tests/../source/MemoryTest/../LED/../../drivers/fsl_gpio.h \
  ../Tests/../source/MemoryTest/../Logger/logger.h
 
 ../Tests/tests.h:
@@ -74,5 +77,11 @@ Tests/tests.o Tests/tests.d: ../Tests/tests.c ../Tests/tests.h \
 ../Tests/../source/MemoryTest/../Pattern/patternGenerator.h:
 
 ../Tests/../source/MemoryTest/../MemoryTest/MemoryTest.h:
+
+../Tests/../source/MemoryTest/../LED/RGB.h:
+
+../Tests/../source/MemoryTest/../LED/../../CMSIS/MKL25Z4.h:
+
+../Tests/../source/MemoryTest/../LED/../../drivers/fsl_gpio.h:
 
 ../Tests/../source/MemoryTest/../Logger/logger.h:

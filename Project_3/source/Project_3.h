@@ -32,7 +32,9 @@
 #define LENGTH 16
 #include "Pattern/patternGenerator.h"
 #include "MemoryTest/MemoryTest.h"
+#include "LED/RGB.h"
 #include "Logger/logger.h"
 extern LoggerHandle logger;
+extern RGBLEDHandle led;
 
 #endif /* PROJECT_3_H_ */
